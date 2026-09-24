@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Daniel, creative and data & AI</title>
+<meta name="description" content="Daniel is a creative and data & AI consultant from Melbourne.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FFFFFF;
+    --text: #000000;
+    --quiet: #767676;
+    --line: #E4E4E4;
+    --font: "Hanken Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #0F0F0F; --text: #F2F2F2; --quiet: #8C8C8C; --line: #2A2A2A; }
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font: 400 1rem/1.5 var(--font); -webkit-font-smoothing: antialiased; }
+  a { color: inherit; text-decoration: none; }
+  a:hover { color: var(--quiet); }
+  :focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
+
+  .page { padding: 0 clamp(1.25rem, 4vw, 3rem); }
+  .grid { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: 1.25rem; }
+
+  header { padding-block: 1.5rem; align-items: baseline; }
+  header .name { grid-column: 1 / 4; font-weight: 500; }
+  header .role { grid-column: 4 / 9; color: var(--quiet); }
+  header nav { grid-column: 9 / 13; display: flex; gap: 1.5rem; justify-content: flex-end; }
+
+  .intro { padding-block: clamp(6rem, 18vh, 11rem) clamp(5rem, 14vh, 9rem); }
+  .intro h1 {
+    grid-column: 1 / 11;
+    font-weight: 300; font-size: clamp(2rem, 4.6vw, 4.25rem);
+    line-height: 1.08; letter-spacing: -0.025em;
+  }
+  .intro h1 span { color: var(--quiet); }
+
+  .work-head { align-items: baseline; padding-bottom: 1rem; border-bottom: 1px solid var(--text); }
+  .work-head h2 { grid-column: 1 / 4; font-weight: 500; font-size: 1rem; }
+  .filters { grid-column: 4 / 13; display: flex; gap: 1.25rem; }
+  .filters button { font: inherit; color: var(--quiet); background: none; border: 0; cursor: pointer; padding: 0; }
+  .filters button[aria-pressed="true"] { color: var(--text); }
+
+  /* Visual work grid: two equal columns */
+  .work {
+    list-style: none; padding-top: 2rem;
+    display: grid; grid-template-columns: repeat(12, 1fr); column-gap: 1.25rem; row-gap: clamp(3rem, 6vw, 5rem);
+  }
+  .work li { grid-column: span 6; }
+  .work li[hidden] { display: none; }
+  .work a { display: block; }
+  .work a:hover { color: inherit; }
+  .media {
+    aspect-ratio: 4 / 3; overflow: hidden; background: var(--line);
+    display: grid; place-items: center; color: var(--quiet); font-size: .875rem;
+  }
+  .media img, .media video { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .6s ease; }
+  .work a:hover .media img, .work a:hover .media video { transform: scale(1.03); }
+  .caption { display: flex; justify-content: space-between; gap: 1rem; margin-top: .9rem; align-items: baseline; }
+  .caption .title { font-size: clamp(1.1rem, 1.6vw, 1.3rem); letter-spacing: -0.01em; }
+  .caption .meta { color: var(--quiet); white-space: nowrap; }
+  .work .desc { color: var(--quiet); margin-top: .25rem; max-width: 52ch; }
+
+  /* Colour trail */
+  #trail { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 10; mix-blend-mode: multiply; opacity: .6; }
+  @media (prefers-color-scheme: dark) { #trail { mix-blend-mode: screen; } }
+
+  .about { padding-block: clamp(6rem, 16vh, 10rem); }
+  .about h2 { grid-column: 1 / 4; font-weight: 500; font-size: 1rem; }
+  .about .body { grid-column: 4 / 10; font-size: clamp(1.15rem, 1.6vw, 1.35rem); line-height: 1.5; }
+  .about .body p + p { margin-top: 1.25rem; }
+  .about .elsewhere { grid-column: 4 / 10; margin-top: 3rem; display: flex; gap: 2rem; color: var(--quiet); }
+
+  .contact { padding-block: 3rem 2rem; border-top: 1px solid var(--text); align-items: end; }
+  .contact .ask { grid-column: 1 / 8; font-weight: 300; font-size: clamp(2rem, 4.6vw, 4.25rem); line-height: 1.08; letter-spacing: -0.025em; }
+  .contact .ask a { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .15em; }
+  .contact .links { grid-column: 9 / 13; display: flex; gap: 1.5rem; justify-content: flex-end; }
+  footer { padding-block: 2rem; color: var(--quiet); font-size: .875rem; }
+
+  @media (max-width: 800px) {
+    header .role { display: none; }
+    header .name { grid-column: 1 / 7; }
+    header nav { grid-column: 7 / 13; }
+    .intro h1 { grid-column: 1 / 13; }
+    .work-head h2 { grid-column: 1 / 13; margin-bottom: .75rem; }
+    .filters { grid-column: 1 / 13; }
+    .work li { grid-column: 1 / 13; }
+    .about h2, .about .body, .about .elsewhere { grid-column: 1 / 13; }
+    .about h2 { margin-bottom: 1.5rem; }
+    .contact .ask, .contact .links { grid-column: 1 / 13; }
+    .contact .links { justify-content: flex-start; margin-top: 2rem; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header class="grid">
+    <a class="name" href="#">Daniel</a>
+    <span class="role">Creative, data and AI</span>
+    <nav aria-label="Main">
+      <a href="#work">Work</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="intro grid">
+      <h1>Daniel is a creative and data &amp; AI consultant from Melbourne. <span>He works on ideas that need both.</span></h1>
+    </section>
+
+    <section id="work" aria-labelledby="work-title">
+      <div class="work-head grid">
+        <h2 id="work-title">Selected work</h2>
+        <div class="filters" role="group" aria-label="Filter work">
+          <button type="button" data-filter="all" aria-pressed="true">All</button>
+          <button type="button" data-filter="creative" aria-pressed="false">Creative</button>
+          <button type="button" data-filter="data" aria-pressed="false">Data &amp; AI</button>
+        </div>
+      </div>
+
+      <ul class="work">
+        <li data-kind="creative data">
+          <a href="#">
+            <div class="media">Project image or video</div>
+            <div class="caption"><span class="title">A project that uses both</span><span class="meta">Creative and AI, 2025</span></div>
+            <p class="desc">The crossover piece: a data-led idea or an AI tool with a point of view.</p>
+          </a>
+        </li>
+        <li data-kind="creative">
+          <a href="#">
+            <div class="media">Campaign image</div>
+            <div class="caption"><span class="title">Brand: Campaign title</span><span class="meta">Campaign, 2026</span></div>
+            <p class="desc">One line on the brief and the idea.</p>
+          </a>
+        </li>
+        <li data-kind="data">
+          <a href="#">
+            <div class="media">Product screenshot</div>
+            <div class="caption"><span class="title">Project name</span><span class="meta">AI product, 2025</span></div>
+            <p class="desc">What you built, and what changed because of it.</p>
+          </a>
+        </li>
+        <li data-kind="creative">
+          <a href="#">
+            <div class="media">Campaign image</div>
+            <div class="caption"><span class="title">Brand: Campaign title</span><span class="meta">Social, 2026</span></div>
+            <p class="desc">A second creative piece in a different medium or tone.</p>
+          </a>
+        </li>
+        <li data-kind="data">
+          <a href="#">
+            <div class="media">Diagram or result</div>
+            <div class="caption"><span class="title">Project name</span><span class="meta">Data strategy, 2024</span></div>
+            <p class="desc">Client can stay unnamed. Focus on the problem and outcome.</p>
+          </a>
+        </li>
+      </ul>
+    </section>
+
+    <section id="about" class="about grid" aria-labelledby="about-title">
+      <h2 id="about-title">About</h2>
+      <div class="body">
+        <p>I've spent about five years in data and AI consulting, helping organisations work out what to build and how to make it useful.</p>
+        <p>Before that, I was big into Marketing, copywriting, graphic design and some limited digital marketing in the early days.</p>
+        <p>In 2026, I have taken some purposeful steps to tap back into my creative side and see what I can produce in protest to AI.</p>
+        <p>I see the intersection of technology, data and art - and I want to keep pulling on that thread. </p>
+      </div>
+      <div class="elsewhere">
+        <a target="_blank" href="https://www.linkedin.com/in/danieljohnmcarthur/">LinkedIn</a>
+        <a target="_blank" href="https://dojodaniel.substack.com/?r=2qhno1&utm_campaign=profile&utm_medium=profile-page">Substack</a>
+      </div>
+    </section>
+
+    <section id="contact" class="contact grid" aria-labelledby="contact-title">
+      <p class="ask" id="contact-title">Need some help with something? <a href="mailto:dan.j.mcarthur@gmail.com">Drop me a line.</a></p>
+      <div class="links">
+        <a target="_blank" href="https://www.linkedin.com/in/danieljohnmcarthur/">LinkedIn</a>
+        <a target="_blank" href="https://dojodaniel.substack.com/?r=2qhno1&utm_campaign=profile&utm_medium=profile-page">Substack</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>© <span id="year"></span> Daniel</footer>
+</div>
+
+<canvas id="trail" aria-hidden="true"></canvas>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  const buttons = document.querySelectorAll('.filters button');
+  const items = document.querySelectorAll('.work li');
+  buttons.forEach(btn => btn.addEventListener('click', () => {
+    const f = btn.dataset.filter;
+    buttons.forEach(b => b.setAttribute('aria-pressed', String(b === btn)));
+    items.forEach(li => { li.hidden = !(f === 'all' || li.dataset.kind.split(' ').includes(f)); });
+  }));
+
+  // Colour trail: one continuous, smoothed line that drifts through a muted palette and fades out
+  const canvas = document.getElementById('trail');
+  const fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!fine || still) {
+    canvas.remove();
+  } else {
+    const ctx = canvas.getContext('2d');
+    // Palette, softened toward grey so the colours read muted and cool
+    const base = ['#5AA9E6', '#A7394C', '#E9EB87', '#FFFFFA'];
+    const MUTE = 0.18, GREY = [150, 155, 165];
+    const palette = base.map(h => {
+      const c = [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16));
+      return c.map((v, i) => v + (GREY[i] - v) * MUTE);
+    });
+    function colourAt(t) {
+      const n = palette.length, i = Math.floor(t) % n, f = t - Math.floor(t);
+      const a = palette[i], b = palette[(i + 1) % n];
+      return `rgb(${a.map((v, k) => Math.round(v + (b[k] - v) * f)).join(',')})`;
+    }
+
+    let dpr = 1, pts = [], travel = 0, width = 18, running = false, idle = 0;
+    function resize() {
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = innerWidth * dpr; canvas.height = innerHeight * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+    }
+    resize(); addEventListener('resize', resize);
+
+    function fade() {
+      ctx.globalCompositeOperation = 'destination-out';
+      ctx.fillStyle = 'rgba(0,0,0,0.045)';
+      ctx.fillRect(0, 0, innerWidth, innerHeight);
+      ctx.globalCompositeOperation = 'source-over';
+      idle++;
+      if (idle < 180) requestAnimationFrame(fade);
+      else { ctx.clearRect(0, 0, innerWidth, innerHeight); running = false; }
+    }
+
+    const mid = (p, q) => ({ x: (p.x + q.x) / 2, y: (p.y + q.y) / 2 });
+    addEventListener('pointermove', e => {
+      const p = { x: e.clientX, y: e.clientY };
+      const prev = pts[pts.length - 1];
+      if (prev && Math.hypot(p.x - prev.x, p.y - prev.y) < 3) return; // ignore jitter so no dots form
+      pts.push(p);
+      if (pts.length > 3) pts.shift();
+      if (pts.length === 3) {
+        const [p0, p1, p2] = pts;
+        const dist = Math.hypot(p2.x - p1.x, p2.y - p1.y);
+        travel += dist / 900;
+        width += (Math.max(8, 22 - dist * 0.2) - width) * 0.15; // ease thickness changes
+        const m1 = mid(p0, p1), m2 = mid(p1, p2);
+        ctx.strokeStyle = colourAt(travel);
+        ctx.lineWidth = width;
+        ctx.beginPath(); ctx.moveTo(m1.x, m1.y); ctx.quadraticCurveTo(p1.x, p1.y, m2.x, m2.y); ctx.stroke();
+      }
+      idle = 0;
+      if (!running) { running = true; requestAnimationFrame(fade); }
+    });
+    const lift = () => { pts = []; };
+    document.addEventListener('pointerleave', lift);
+    addEventListener('blur', lift);
+  }
+</script>
+</body>
+</html>
